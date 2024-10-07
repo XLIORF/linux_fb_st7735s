@@ -1,0 +1,5 @@
+.cache/
+.vscode/
+src/lv_port_linux/build/
+driver_with_dma/
+compile_commands.json
