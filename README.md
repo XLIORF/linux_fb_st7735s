@@ -1,29 +1,55 @@
-# 已修改问题
+# 简介
 
-内存映射报错-6
-    分配空间太少报错
+本仓库为保存学习Framebuffer驱动过程的代码
 
-内存映射报错-22
-    更换了内存映射函数
+## 目录结构说明
 
-设备树CS引脚复用设置错误
-    引脚复用在GPIO使用指南中有
+app:测试用的应用程序
+driver：驱动程序
+lv_port_linux:lvgl官方的在Linux上的示例
 
-使用io命令控制GPIO熄灭背光灯，表明dc，res，bl引脚复用正常
+# 使用
 
-在驱动中拉低dc，res，bl引脚正常
+## 使用驱动
+1. 下载仓库
 
-短接MOSI，MISO在驱动中收发spi正常
+```
+git clone https://github.com/XLIORF/linux_fb_st7735s.git
+```
 
-尝试spi 模式0和模式3，无效
+2. 修改Makefile
 
-驱动中直接清屏，无效
+打开driver/Makefile
+修改SDK_DIR变量，改为你的SDK路径
+修改CROSS_COMPILE变量，改为你的交叉编译工具路径
 
-确定是高位先行，CPHA，CPOL=00或11都可以
+3. 编译
+```
+cd st7735s/driver
+make -j
+```
+4. 上传并加载
+```
+make upload
+```
+在开发板上
+```
+cd
+insmod st7735s.ko
+```
 
-显示指令和之前成功点亮的一样
+5. 查看内核输出
+在开发板上
+```
+dmesg
+```
 
-# 使用逻辑分析仪分析发先引脚dc，cs的信号并不会发生变化，先查发现引脚复用配置不正确
+## 测试驱动
+1. 修改Makefile
+
+2. 编译
+
+3. 上传并运行
 
 # 引脚连接
 
@@ -34,7 +60,7 @@
 |GPIO1_A2|RES|
 |GPIO0_A4|BL| -->
 
-# 
+# 命令行工具调试引脚
 io -4 0xFF388004 0x00070000  0A4—BL       17
 io -4 0xFF380008 0x00100010	out
 io -4 0xFF380000 0x00100000	low
